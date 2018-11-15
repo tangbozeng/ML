@@ -1,0 +1,110 @@
+---
+title: "ggplot_workshoo_Dan"
+author: "BT"
+date: "14/11/2018"
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## it takes my notes as well. So let's begin with notes from Dan.
+
+```{r steps}
+library(ggplot2)
+ggplot(data=iris)
+ggplot(data=iris) + aes(x=Petal.Width, y=Petal.Length) # we can add some ylim
+```
+#like a pizza!
+```{r}
+ggplot(data=iris) + aes(x=Petal.Width, y=Petal.Length) + geom_point()
+ggplot(data=iris) + aes(x=Petal.Width, y=Petal.Length) + geom_point() + geom_line()
+p <- ggplot(data=iris) + aes(x=Petal.Width, y=Petal.Length)
+p + geom_point(aes(colour=Species))
+p +geom_violin(aes(fill=Species)) + geom_jitter(alpha=0.5)+geom_boxplot(width=0.1) # this is the best practice for violin add box add jitters
+```
+# this part is about differnt types of plotting ways.
+```{r}
+p <- ggplot(iris) + aes(Petal.Width,Petal.Length) + geom_point()
+p + geom_smooth()
+p + geom_density( aes(colour=Species, fill=Species), alpha=0.3) # waves, very important for imaging stuff!
+p +geom_violin(aes(fill=Species)) + geom_jitter(alpha=0.5)+geom_boxplot(aes(fill=Species),width=0.1)
+```
+# in this part, we add some other stuff for labbleing and reversing
+```{r}
+p + geom_violin() + geom_jitter() + coord_flip() # reverse the direction
+p + geom_jitter(aes(colour=color), position=position_dodge(width=0.5) )# note that position is inside of the AES!
+p <- ggplot(diamonds) + aes(carat, price) 
+p + geom_point(aes(colour=cut)) + facet_wrap( ~ cut) # here, we get xy, get cutm but also sperate samples as cut as well
+p + geom_point(aes(colour=cut)) + facet_grid(color ~ cut) # we add color as well, so this is 4 dimensions plotting!
+#x, y, cut, colors!
+p <- ggplot(iris) + aes(Petal.Width,Petal.Length) + geom_point(aes(colour=Species)) 
+p + theme_bw() + theme(text = element_text(family = "Times", face='italic', colour = "blue", size = 14)) # add italic names! I found it!
+p + theme_bw() + theme(axis.text.x = element_text(colour="red"))# add x as red
+```
+# loading data practice!
+```{r}
+mydata<-read.csv('/Users/tangb/')
+write.csv()
+```
+#statistics
+```{r}
+library(psych)
+describeBy(iris, iris$Species)
+ddply(diamonds, c('cut', 'color'), summarise, mean=mean(price), sd=sd(price) ) # to get needed informations
+```
+# scatterplot matrix
+```{r}
+pairs(~mpg+disp+drat+wt,data=mtcars, 
+   main="Simple Scatterplot Matrix") # simple one
+library(car)
+scatterplot.matrix(~mpg+disp+drat+wt|cyl, data=mtcars,
+  	main="Three Cylinder Options") # better one
+library(gclus)
+dta <- mtcars[c(1,3,5,6)] # get data 
+dta.r <- abs(cor(dta)) # get correlations
+dta.col <- dmat.color(dta.r) # get colors
+# reorder variables so those with highest correlation
+# are closest to the diagonal
+dta.o <- order.single(dta.r) 
+cpairs(dta, dta.o, panel.colors=dta.col, gap=.5,
+main="Variables Ordered and Colored by Correlation" )
+```
+#coorelogram?
+```{r}
+library(corrgram)
+corrgram(mtcars, order=TRUE, lower.panel=panel.ellipse,
+  upper.panel=panel.pts, text.panel=panel.txt,
+  diag.panel=panel.minmax, 
+ 	main="Car Mileage Data in PC2/PC1 Order")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

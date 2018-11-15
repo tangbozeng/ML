@@ -1,0 +1,35 @@
+---
+title: "Machine_learning_regression"
+author: "BT"
+date: "15/11/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# ML pactice
+Machine learning (ML) is divided into two different fields:
+
+Supervised ML defined as a set of tools used for prediction (linear model, logistic regression, linear discriminant analysis, classification trees, support vector machines and more)
+Unsupervised ML, also known as clustering, is an exploratory data analysis technique used for identifying groups (i.e clusters) in the data set of interest. Each group contains observations with similar profile according to a specific criteria. Similarity between observations is defined using some inter-observation distance measures including Euclidean and correlation-based distance measures.
+This document describes the use of unsupervised machine learning approaches, including Principal Component Analysis (PCA) and clustering methods.
+
+Principal Component Analysis (PCA) is a dimension reduction techniques applied for simplifying the data and for visualizing the most important information in the data set
+Clustering is applied for identifying groups (i.e clusters) among the observations. Clustering can be subdivided into five general strategies:
+Partitioning methods
+Hierarchical clustering
+Fuzzy clustering
+Density-based clustering
+Model-based clustering
+```{r}
+dim(USArrests)
+dimnames(USArrests)
+apply(USArrests,2,mean) # get means values
+apply(USArrests,2,var) # get variables
+pca.out<-prcomp(USArrests,scale=TRUE) # to get standarized variables
+pca.out
+biplot(pca.out,scale = 0, cex=0.65)
+```
+

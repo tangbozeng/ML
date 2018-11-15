@@ -1,0 +1,36 @@
+---
+title: "notes_Apan"
+author: "BT"
+date: "15/11/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##general stuff from apan
+
+```{r}
+data<- data.frame (x,x1,x2)
+data$x
+data$x2 # make a quick data frame
+y<-scan()
+skew(y) #偏度
+kurtosi(y)#峰度
+shapiro.test(y) #检测是否符合正太分布
+library(dplyr)
+small_iris <- filter(iris, Species == c("versicolor", "setosa"))
+t.test(Petal.Width ~ Species, data=small_iris) # t-test for paired samples
+```
+# Best package for PCA so far!
+```{r}
+library(ggbiplot) #PCA packages
+data(wine)
+wine.pca <- prcomp(wine, scale. = TRUE)
+ggbiplot(wine.pca, obs.scale = 1, var.scale = 1,
+  groups = wine.class, ellipse = TRUE, circle = TRUE) +
+  scale_color_discrete(name = '') +
+  theme(legend.direction = 'horizontal', legend.position = 'top')
+```
+

@@ -1,0 +1,40 @@
+---
+title: "Clustering_ML"
+author: "BT"
+date: "15/11/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Unsupervised ML is popular in many fields, including:
+
+In cancer research field in order to classify patients in subgroups according their gene expression profile. This can be useful for identifying the molecular profile of patients with good or bad prognostic, as well as for understanding the disease.
+In marketing for market segmentation by identifying subgroups of customers with similar profiles and who might be receptive to a particular form of advertising.
+City-planning: for identifying groups of houses according to their type, value and location.
+
+```{r}
+my_data <- USArrests
+my_data <- na.omit(my_data) # remove any NA values
+my_data <- scale(my_data) # get all variables
+install.packages("factoextra") # Install cluster package
+install.packages("cluster")
+library("cluster")
+library("factoextra")
+res.dist <- get_dist(USArrests, stand = TRUE, method = "pearson") # get distance
+fviz_dist(res.dist, 
+   gradient = list(low = "#00AFBB", mid = "white", high = "#FC4E07")) #get heatmap for distance
+fviz_nbclust(my_data, kmeans, method = "gap_stat") # determine numbers for k-means
+library("factoextra")
+fviz_cluster(km.res, data = my_data, frame.type = "convex")+
+  theme_minimal() # get result form kmeans
+library("cluster")
+
+pam.res <- pam(my_data, 4)
+fviz_cluster(pam.res) # this is a nother way to do cluster, which is less sensitive
+
+
+```
+
